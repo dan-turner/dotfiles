@@ -6,9 +6,41 @@
 [alias]
         co = checkout
         promote = !$ZSH/bin/git-promote
-        wtf     = !$ZSH/bin/git-wtf
+        wtf = !$ZSH/bin/git-wtf
         rank-contributors = !$ZSH/bin/git-rank-contributors
-        count   = !git shortlog -sn
+        count = !git shortlog -sn
+        st = status
+        ci = commit
+        br = branch
+        co = checkout
+        cod = checkout develop
+        com = checkout master
+        fe = fetch --all
+        bn = !git for-each-ref --format='%(refname:short)' `git symbolic-ref HEAD`
+        rb = rebase
+        rbm = rebase master
+        rbu = !sh -c 'BRANCH=$(git bn) && git rb upstream/$BRANCH'
+        rbum = rebase upstream/master
+        pr = !sh -c 'BRANCH=$(git bn) && git co $0 && git fe && git merge --ff-only origin/$0 && git co $BRANCH && git rb $0'
+        prm = !git pr master
+        df = diff
+        who = shortlog -s --
+        hr = reset --hard
+        undo = reset --soft HEAD~1
+        hro = !sh -c 'BRANCH=$(git bn) && git hr origin/$BRANCH'
+        hru = !sh -c 'BRANCH=$(git bn) && git hr upstream/$BRANCH'
+        lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+        upstream = !sh -c 'BRANCH=$(git bn) && git rev-parse --abbrev-ref $BRANCH@{upstream}'
+        q = !sh -c 'BRANCH=$(git bn) && UPSTREAM=$(git upstream) && git lg $UPSTREAM..$BRANCH'
+        new = !sh -c 'BRANCH=$(git bn) && UPSTREAM=$(git upstream) && git lg $BRANCH..$UPSTREAM'
+        rbc = rebase --continue
+        mt = mergetool
+        unstage = reset HEAD $1
+        stage = add -A
+        ff = !sh -c 'UPSTREAM=$(git upstream) && git merge --ff-only $UPSTREAM'
+        nuke = !git clean -dxf && git checkout -f
+        configpr = !sh -c 'git config --local --add remote.origin.fetch +refs/pull-requests/*:refs/remotes/origin/pull-requests/*'
+        copr = !sh -c 'git fetch origin pull-requests/$0/from && git checkout pull-requests/$0/from'
 [color]
         diff = auto
         status = auto
@@ -21,6 +53,8 @@
         whitespace = nowarn
 [mergetool]
         keepBackup = false
+        bc3 = trustExitCode
+        bcomp = trustExitCode
 [difftool]
         prompt = false
 [help]
@@ -33,3 +67,21 @@
         default = simple
 [credential]
 	helper = osxkeychain
+[diff]
+	tool = bc3
+[merge]
+	tool = bc3
+[mergetool "bc3"]
+	trustExitCode = true
+[commit]
+	gpgsign = true
+[user]
+	signingkey = E58AD3C0BF69435E
+	name = Dan Turner
+	email = dan.turner@cba.com.au
+[difftool "sourcetree"]
+	cmd = /usr/local/bin/bcomp \"$LOCAL\" \"$REMOTE\"
+	path = -ro
+[mergetool "sourcetree"]
+	cmd = /usr/local/bin/bcomp \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+	trustExitCode = true
