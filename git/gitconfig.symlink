@@ -21,6 +21,7 @@
         rbm = rebase master
         rbu = !sh -c 'BRANCH=$(git bn) && git rb upstream/$BRANCH'
         rbum = rebase upstream/master
+        rbom = rebase origin/master
         pr = !sh -c 'BRANCH=$(git bn) && git co $0 && git fe && git merge --ff-only origin/$0 && git co $BRANCH && git rb $0'
         prm = !git pr master
         df = diff
@@ -47,16 +48,10 @@
         branch = auto
         ui = true
 [core]
-        excludesfile = ~/.gitignore
+        excludesfile = /Users/dan/.gitignore_global
         editor = vim
 [apply]
         whitespace = nowarn
-[mergetool]
-        keepBackup = false
-        bc3 = trustExitCode
-        bcomp = trustExitCode
-[difftool]
-        prompt = false
 [help]
         autocorrect = 1
 [push]
@@ -67,18 +62,17 @@
         default = simple
 [credential]
 	helper = osxkeychain
-[diff]
-	tool = bc3
-[merge]
-	tool = bc3
-[mergetool "bc3"]
-	trustExitCode = true
 [commit]
-	gpgsign = true
+        gpgsign = true
+        template = /Users/turnerd/.stCommitMsg
 [user]
-	signingkey = E58AD3C0BF69435E
-	name = Dan Turner
-	email = dan.turner@cba.com.au
+        signingkey = E58AD3C0BF69435E
+        name = Dan Turner
+        email = dan.p.turner@gmail.com
+[diff]
+        tool = bc3
+[merge]
+        tool = bc3
 [difftool "sourcetree"]
 	cmd = /usr/local/bin/bcomp \"$LOCAL\" \"$REMOTE\"
 	path = -ro

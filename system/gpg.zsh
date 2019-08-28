@@ -18,6 +18,9 @@ gpg-restart () {
     echo "restart gpg-agent"
     eval $(gpg-agent --daemon)
 
+    GPG_TTY=$(tty)
+    export GPG_TTY
+
     echo
     echo "All done. Now unplug / replug the token."
     echo
