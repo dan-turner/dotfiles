@@ -75,3 +75,6 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+
+add-zsh-hook chpwd load-awsrc
+load-awsrc

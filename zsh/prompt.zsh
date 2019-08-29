@@ -70,7 +70,14 @@ google_env() {
   gcloud config get-value project
 }
 
-export PROMPT=$'\n$(battery_status) in $(directory_name) $(git_dirty)$(need_push)\n› '
+aws_profile() {
+    if [[ $AWS_PROFILE != "default" ]]
+    then
+        echo "%{$fg_bold[yellow]%}${AWS_PROFILE}%{$reset_color%} "
+    fi
+}
+
+export PROMPT=$'\n$(battery_status)$(aws_profile)in $(directory_name) $(git_dirty)$(need_push)\n› '
 set_prompt () {
   export RPROMPT="%{$fg_bold[cyan]%}%{$reset_color%}"
 }
