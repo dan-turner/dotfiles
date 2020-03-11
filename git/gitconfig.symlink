@@ -48,7 +48,7 @@
         branch = auto
         ui = true
 [core]
-        excludesfile = /Users/dan/.gitignore_global
+	excludesfile = /Users/dan/.gitignore_global
         editor = vim
 [apply]
         whitespace = nowarn
@@ -61,26 +61,26 @@
         # Setting to git 2.0 default to suppress warning message
         default = simple
 [credential]
-	helper = osxkeychain
+        helper = osxkeychain
 [commit]
         gpgsign = true
-        template = /Users/turnerd/.stCommitMsg
+	template = /Users/turnerd/.stCommitMsg
 [user]
         signingkey = E58AD3C0BF69435E
 	name = Dan Turner
 	email = dan.p.turner@gmail.com
 [diff]
-        tool = bc3
+        tool = bc
 [merge]
         tool = bc3
+[filter "lfs"]
+        clean = git-lfs clean -- %f
+        smudge = git-lfs smudge -- %f
+        process = git-lfs filter-process
+        required = true
 [difftool "sourcetree"]
 	cmd = /usr/local/bin/bcomp \"$LOCAL\" \"$REMOTE\"
 	path = -ro
 [mergetool "sourcetree"]
 	cmd = /usr/local/bin/bcomp \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
 	trustExitCode = true
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
